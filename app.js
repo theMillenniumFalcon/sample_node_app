@@ -1,10 +1,20 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const dotenv = require('dotenv');
 const app = express()
 const port = 3000
 const tasks = require('./routes/tasks')
 
+dotenv.config()
+
 // middleware
 app.use(express.json())
+
+mongoose.connect(process.env.MONGO_URL, 
+    { useNewUrlParser: true, unUnifiedTopology: true }, 
+    () => {
+    console.log("Connected to MongoDB")
+})
 
 // routes
 app.get('/', (req, res) => {
